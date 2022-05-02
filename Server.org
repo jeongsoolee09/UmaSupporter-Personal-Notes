@@ -260,3 +260,14 @@ Turn은 (주니어 | 클래식 | 수석 | 파이널스) 넷 중 하나
    3. ?의 폰트 교체
 
 위의 과정을 TextFromImageFutureList와 eventBottomOptionFutureList에 대해 실행해서, 각각 m_eventName과 m_eventBottomOption 스테이트에 저장
+
+** 2022-05-02 19:34:52
+
+*** UmaCruise에 대한 고충
+
+흑흑.... 이거 못 돌려보는게 너무 짜증나는데
+
+맥북에서 돌릴 수 있는 방법 ㄹㅇ로 하나도 없나
+--> 맥북에서 돌리려면 패러렐즈에다가 Windows on ARM을 받아서 돌려야 한다. 안습... x86 프로그램을 에뮬레이팅하는 윈도우를 에뮬레이팅하는 맥북인 셈.
+
+맘같으면 200 꼬라서 12세대 달린 xps13 사고싶네ㅋㅋ
