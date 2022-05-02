@@ -1,10 +1,8 @@
 * ~Umamusume.Server~
 
-** 2022-04-22 21:07:05
+** DONE ~umamusume_test.test_umamusume_event~ 테스트
 
-*** DONE ~umamusume_test.test_umamusume_event~ 테스트
-
-**** DONE 에러 1
+*** DONE 에러 1
 CLOSED: [2022-04-26 Tue 17:02]
 
 #+begin_example
@@ -35,16 +33,14 @@ AssertionError: assert 12 == 24
 
 pytest도 soup2, soup3, soup4를 추가해서 확장 완료.
 
-**** ABORTED 에러 2
+*** ABORTED 에러 2
 CLOSED: [2022-04-26 Tue 17:02]
 
 는 경로 문제인 것 같은데 잘 모르겠음 (내 맥북에서만 테스트 실패하는 듯)
 
-** 2022-04-26 16:56:39
+** WORKING ~UmaCruise~ 공부
 
-*** TODO ~UmaCruise~ 공부
-
-**** DONE ~AboutDlg~
+*** DONE ~AboutDlg~
 CLOSED: [2022-04-26 Tue 17:29]
 
 *UI 클래스*
@@ -60,19 +56,19 @@ MFC 앱을 만들기 위한 여러 이벤트 핸들러들
 
 여기서 핵심은 OnOCR인데, 한줄한줄 뜯어본 것은 아니지만 대충 OnOCR은 이런저런 필터를 가져다가 적용한 결과 7가지를 표시하는 (~cv::imshow~) 게 주 목적인 함수.
 
-**** DONE ~Config~
+*** DONE ~Config~
 CLOSED: [2022-04-26 Tue 17:57]
 
 config을 json 형태로 읽고 쓰는 클래스
 
-**** DONE ~ConfigDlg~
+*** DONE ~ConfigDlg~
 CLOSED: [2022-04-26 Tue 18:06]
 
 *UI 클래스*
 
 config 관련 다이얼로그
 
-**** ABORTED ~MainDlg~
+*** ABORTED ~MainDlg~
 CLOSED: [2022-04-26 Tue 18:06]
 
 *UI 클래스*
@@ -81,39 +77,39 @@ CLOSED: [2022-04-26 Tue 18:06]
 
 다 읽어보진 않았지만 별볼일 없는듯
 
-**** ~PreviewWindow~
+*** ~PreviewWindow~
 
 *UI 클래스*
 
-**** ~RaceDateLibrary~
+*** ~RaceDateLibrary~
 
 
 
-**** ~RaceListWindow~
+*** ~RaceListWindow~
 
 
 
-**** ~RichEditPopup~
+*** ~RichEditPopup~
 
 
 
-**** ~SkillLibrary~
+*** ~SkillLibrary~
 
 
 
-**** ~TesseractWrapper~
+*** ~TesseractWrapper~
 
 
 
-**** ~UmaCruise~
+*** ~UmaCruise~
 
 
 
-**** ~UmaEventLibrary~
+*** ~UmaEventLibrary~
 
 
 
-**** DONE ~UmaTextRecognizer~
+*** DONE ~UmaTextRecognizer~
 CLOSED: [2022-04-29 Fri 21:56]
 
 여기가 재밌는 부분.
@@ -122,7 +118,7 @@ CLOSED: [2022-04-29 Fri 21:56]
 - ~UmaTextRecognizer::LoadSetting~
 - ~UmaTextRecognizer::TextRecognizer~
 
-***** TextRecognizer (중요!)
+**** TextRecognizer (중요!)
 
 - 말딸 이름 (m_umaMusumeName)
 - 현재 순서 (m_currentTurn)
@@ -133,14 +129,14 @@ CLOSED: [2022-04-29 Fri 21:56]
 
 이 메소드는 스크린샷이 찍히면 실행됨 (MainDlg::OnScreenShot).
 
-****** 헬퍼들
+***** 헬퍼들
 
 - _AdjustBounds: CRect를 srcImage의 크기에 맞게 리사이징
 - _InRangeHSVTextColorBounds: kHSVTextBounds의 최솟값/최댓값에 맞는 색역대? 범위? (뭐라 하나 그걸) 안에 들어오는 픽셀들만 모으기
 - _IsEventNameIcon: 주어진 이미지가 event name icon인가?
   - cv::threshold로 이진화한 다음 하얀 픽셀이 과반수인지를 보는 방법
 
-****** 일본어 코멘트 번역
+***** 일본어 코멘트 번역
 
 - asyncに渡す関数オブジェクト: async에 전달할 함수 인자
 - アイコンが存在した場合、認識範囲を右にずらす: 아이콘이 있으면 인식 범위를 오른쪽으로 이동
@@ -169,7 +165,7 @@ CLOSED: [2022-04-29 Fri 21:56]
 - text を適当に変換してから listへ追加する: text를 적절하게 변환 한 다음 list에 추가
 - (ジュニア|クラシック|シニア|ファイナルズ) : (주니어 | 클래식 | 수석 | 파이널스)
 
-****** 파트 0: 예비 연산
+***** 파트 0: 예비 연산
 
 필드값 초기화
 
@@ -189,7 +185,7 @@ CLOSED: [2022-04-29 Fri 21:56]
 
 앞으로 6가지의 텍스트 데이터를 뽑아내기 위해 위의 두 리스트에다가 OCR하는 future를 만들어서 집어넣을 것.
 
-****** 파트 1: イベント名 (이벤트명) 추출
+***** 파트 1: イベント名 (이벤트명) 추출
 
 소스 이미지에서 세 가지 이미지를 만들어서 OCR하게 할 것.
 
@@ -199,7 +195,7 @@ CLOSED: [2022-04-29 Fri 21:56]
   
 세 가지에 대해 OCR하는 future를 TextFromImageFutureList에다가 추가.
 
-******* 파트 2: イベント選択肢 (이벤트 선택지)
+****** 파트 2: イベント選択肢 (이벤트 선택지)
 
 - cutImage3: 소스 이미지에서 이벤트 선택지에 해당하는 부분을 잘라낸 것
 - textImage: cutImage3에서 HSV 색역대에 들어가는 픽셀만 필터링한 것
@@ -208,7 +204,7 @@ CLOSED: [2022-04-29 Fri 21:56]
 
 thresImage랑 invertedTextImage를 OCR하는 future를 eventBottomOptionFutureList에다가 추가.
 
-****** 파트 3: 現在の日付 (현재 날짜)
+***** 파트 3: 現在の日付 (현재 날짜)
 
 Turn은 (주니어 | 클래식 | 수석 | 파이널스) 넷 중 하나
 
@@ -225,7 +221,7 @@ Turn은 (주니어 | 클래식 | 수석 | 파이널스) 넷 중 하나
 
 파트 3까지 실행되면 m_currentTurn에는 URA와 아오하루 두 개에 대해서 현재 날짜 텍스트가 쌓임.
 
-****** 파트 4: 育成ウマ娘名[育成ウマ娘選択] (육성 말딸명 [육성 말딸 선택])
+***** 파트 4: 育成ウマ娘名[育成ウマ娘選択] (육성 말딸명 [육성 말딸 선택])
 
 파트 3는 Turn이 *안* 보이면 실행됨. 즉, 파트 3과 파트 4가 실행되는 조건은 mutually exclusive.
 
@@ -235,23 +231,23 @@ Turn은 (주니어 | 클래식 | 수석 | 파이널스) 넷 중 하나
 
 이 방법으로 subName과 Name을 모두 찾아내고 (성과 이름? subName이 뭔지 모르겠네), m_umaMusumeName 스테이트에 저장
 
-****** 파트 5: 現在メニュー[トレーニング] (현재 메뉴 [트레이닝])
+***** 파트 5: 現在メニュー[トレーニング] (현재 메뉴 [트레이닝])
 
 - grayImage: 현재 메뉴 부분을 잘라내고 그레이스케일
 - 트레이닝 메뉴, 뒤로 버튼이 모두 포착되면 m_bTrainingMenu 스테이트를 true로
 
-****** 파트 6: 育成トップ (육성 톱)
+***** 파트 6: 育成トップ (육성 톱)
 
 /육성 톱/ 이 뭔지 모르겠네. 아마 육성 메뉴의 맨 윗부분??
 
 - AbilityDetailBounds가 보이느냐 아니냐로 판단함. 원본 이미지만 자르고 사용함
 
-****** 파트 7: レース詳細 (레이스 상세)
+***** 파트 7: レース詳細 (레이스 상세)
 
 - 원본 이미지 자르고 HSV 색역대에 맞게 픽셀 추출했을 때, 하얀 픽셀이 일정 비율 이상이라면 반전한 다음에 이미지 추출
 - 뒤로 가기 버튼이 있다면 (하얀 픽셀이 일정 비율 이상), 레이스 예약 완료. 미터 수를 추출해서 m_entryRaceDistance 스테이트에 저장
 
-****** 파트 8: future 계산하고, normalization하고, 저장
+***** 파트 8: future 계산하고, normalization하고, 저장
 
 1. future를 계산해서 결과값을 받는다.
 2. 텍스트 노멀라이제이션
@@ -261,9 +257,7 @@ Turn은 (주니어 | 클래식 | 수석 | 파이널스) 넷 중 하나
 
 위의 과정을 TextFromImageFutureList와 eventBottomOptionFutureList에 대해 실행해서, 각각 m_eventName과 m_eventBottomOption 스테이트에 저장
 
-** 2022-05-02 19:34:52
-
-*** UmaCruise에 대한 고충
+** UmaCruise에 대한 고충
 
 흑흑.... 이거 못 돌려보는게 너무 짜증나는데
 
