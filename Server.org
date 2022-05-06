@@ -47,12 +47,12 @@ CLOSED: [2022-04-26 Tue 17:29]
 
 MFC 앱을 만들기 위한 여러 이벤트 핸들러들
 
-- ~CAboutDlg::OnCloseCmd int (int, int, int, int &)~
-- ~CAboutDlg::OnInitDialog int (int, int, int, int &)~
-- ~CAboutDlg::OnLinkClick int (int, int, int &)~
-- ~CAboutDlg::OnLinkClickHomePage int (int, int, int &)~
-- ~CAboutDlg::OnLinkClickLatestVersion int (int, int, int &)~
-- ~CAboutDlg::OnOCR int (int, int, int, int &)~
+- ~CAboutDlg::OnCloseCmd~
+- ~CAboutDlg::OnInitDialog~
+- ~CAboutDlg::OnLinkClick~
+- ~CAboutDlg::OnLinkClickHomePage~
+- ~CAboutDlg::OnLinkClickLatestVersion~
+- ~CAboutDlg::OnOCR~
 
 여기서 핵심은 OnOCR인데, 한줄한줄 뜯어본 것은 아니지만 대충 OnOCR은 이런저런 필터를 가져다가 적용한 결과 7가지를 표시하는 (~cv::imshow~) 게 주 목적인 함수.
 
@@ -68,14 +68,22 @@ CLOSED: [2022-04-26 Tue 18:06]
 
 config 관련 다이얼로그
 
-*** ABORTED ~MainDlg~
-CLOSED: [2022-04-26 Tue 18:06]
+*** DONE ~MainDlg~
+CLOSED: [2022-05-06 Fri 17:34]
 
-*UI 클래스*
+OCR 실행이 트리거되는 경우는 자동/수동 두 가지가 있음.
 
-앱이 제공하는 여러 다이얼로그들과 그 헬퍼들
+**** ~OnStart~ (자동 트리거)
 
-다 읽어보진 않았지만 별볼일 없는듯
+스타트 버튼 (눌린 다음에는 스탑으로 바뀜): 다음을 주기적으로 실행하는데:
+1. 스크린샷을 찍고 육성 말딸 이름을 갖고 와서 콤보박스를 업데이트한다 (모호하다면 고친다).
+2. 취소할 때까지:
+   1. 스샷 찍고
+   2. OCR (UmaTextRecognizer) 돌려서 현재 말딸 이름, 현재 턴, 이벤트명, 이벤트옵션 업데이트
+
+**** ~OnScreenShot~ (스크린샷 버튼을 사용한 수동 트리거)
+
+스크린샷 버튼이 눌렸을 때
 
 *** ~PreviewWindow~
 
