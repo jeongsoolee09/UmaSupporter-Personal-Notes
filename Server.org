@@ -38,3 +38,11 @@ CLOSED: [2022-04-26 Tue 17:02]
 
 는 경로 문제인 것 같은데 잘 모르겠음 (내 맥북에서만 테스트 실패하는 듯)
 
+** 2022-05-08 12:47:59
+
+*** WORKING UmaCruise mermaid로 리팩토링
+
+sequence diagram이 딱 좋아 보이네.
+
+- [ ] flowchart로 contains_diagram.png 만들고
+- [ ] sequence diagram으로 OCR 과정 다큐멘트하고.

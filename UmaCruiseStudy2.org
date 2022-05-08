@@ -1,0 +1,95 @@
+* ~UmaCruise~ 공부
+
+** 클래스 간 흥미로운 상속 관계는 없다
+
+User-defined exception을 만들기 위한 목적과 ~IScreenShotWindow~ 로 약간의 공통적인 로직을 묶어내는 것 외에는 클래스 간의 흥미로운 inheritance 관계는 보이지 않음.
+
+** OCR의 워크플로우
+
+*** [#C] ~UmaTextRecognizer::TextRecognizer~ 의 실행
+
+#+begin_src mermaid :file ocr_sequence.png
+  sequenceDiagram
+
+      participant MainDlg.OnStart
+      participant UmaTextRecognizer.TextRecognizer
+      participant TesseractEngine
+
+      loop periodically, counting numbers of scans (displayed in window title)
+          note left of MainDlg.OnStart: Capture screenshot
+          MainDlg.OnStart->>UmaTextRecognizer.TextRecognizer: Invoke on captured screenshot
+          UmaTextRecognizer.TextRecognizer->>TesseractEngine: Initialize
+          TesseractEngine-->>UmaTextRecognizer.TextRecognizer: Present Callback as API
+          rect rgb(191, 223, 255)
+          note right of UmaTextRecognizer.TextRecognizer: Using API
+          UmaTextRecognizer.TextRecognizer->>TesseractEngine: Request OCR on Umamusume name
+          TesseractEngine-->>UmaTextRecognizer.TextRecognizer: Present Umamusume Name
+          UmaTextRecognizer.TextRecognizer->>TesseractEngine: Request OCR on Current Race Turn
+          TesseractEngine-->>UmaTextRecognizer.TextRecognizer: Present Current Race Turn
+          UmaTextRecognizer.TextRecognizer->>TesseractEngine: Request OCR on Current Event Name (Async)
+          TesseractEngine-->>UmaTextRecognizer.TextRecognizer: Present Current Event Name
+          UmaTextRecognizer.TextRecognizer->>TesseractEngine: Request OCR on Current Event Options (Async)
+          TesseractEngine-->>UmaTextRecognizer.TextRecognizer: Present Current Event Options
+          end
+          UmaTextRecognizer.TextRecognizer-->>MainDlg.OnStart: Present Umamusume name of Screenshot
+          UmaTextRecognizer.TextRecognizer-->>MainDlg.OnStart: Present Current Race Turn of Screenshot
+          UmaTextRecognizer.TextRecognizer-->>MainDlg.OnStart: Present Current Event Name of Screenshot
+          UmaTextRecognizer.TextRecognizer-->>MainDlg.OnStart: Present Current Event Options of Screenshot
+          note left of MainDlg.OnStart: Refresh UI Dialog Box with presented information
+      end
+#+end_src
+
+
+1. 위의 네 가지 정보의 전달은 MainDlg 클래스가 UmaTextRecognizer 타입의 멤버를 갖고 있기 때문에 가능하다 (밑의 클래스 다이어그램 참조):
+   - ~UmaTextRecognizer~ carries states:
+     - ~m_umaMusumeName~
+     - ~m_currentTurn~
+     - ~m_eventName~
+     - ~m_eventBottomOption~
+   - ~MainDlg~ contains member of ~UmaTextRecognizer~
+     - Therefore, the four values are visible to ~MainDlg::OnStart~.
+2. 어떤 필드값은 동기적으로, 어떤 필드값은 비동기적으로 OCR된다.
+   - 말딸명과 현재 레이스 턴은 ~TesseractWrapper::TextFromImage~ 를 활용해 동기적으로 OCR
+   - 이벤트명과 옵션은 ~TesseractWrapper::GetOCRFunction~ 에서 얻어온 콜백을 활용해 OCR하는 Future를 실행해 비동기적으로 OCR
+
+#+begin_src mermaid :file contains_diagram.png
+  classDiagram
+
+  class MainDlg {
+  ...
+  UmaTextRecognizer m_umaTextRecoginzer
+  ...
+  OnStart(...) void
+  }
+
+  class UmaTextRecognizer {
+  ...
+  vector~String~ m_umaMusumeName
+  vector~String~ m_currentTurn
+  vector~String~ m_eventName
+  vector~String~ m_eventBottomOption
+  ...
+  vector<String>& GetUmaMusumeName()
+  vector<String>& GetCurrentTurn()
+  vector<String>& GetEventName()
+  vector<String>& GetEventBottomOption()
+  }
+
+  class TesseractWrapper {
+  ...
+  vector~String~ m_umaMusumeName
+  vector~String~ m_currentTurn
+  vector~String~ m_eventName
+  vector~String~ m_eventBottomOption
+  ...
+  TextFromImage(Mat) String
+  GetOCRFunction() TextFromImageFunc
+  }
+
+
+  MainDlg ..> UmaTextRecognizer : Contains
+  UmaTextRecognizer ..> TesseractWrapper : Calls API provided by
+#+end_src
+
+#+RESULTS:
+[[file:contains_diagram.png]]
