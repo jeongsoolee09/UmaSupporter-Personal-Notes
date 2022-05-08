@@ -6,7 +6,7 @@ User-defined exception을 만들기 위한 목적과 ~IScreenShotWindow~ 로 약
 
 ** OCR의 워크플로우
 
-*** [#C] ~UmaTextRecognizer::TextRecognizer~ 의 실행
+*** ~UmaTextRecognizer::TextRecognizer~ 의 실행
 
 #+begin_src mermaid :file ocr_sequence.png
   sequenceDiagram
